@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="option.css" />
   </head>
   <body>
-    <div class="footer">
+    <!-- <div class="footer">
       <svg xmlns="http://www.w3.org/2000/svg" class="deriv-logo" width="70" height="10" viewBox="0 0 160 27">
         <defs>
           <linearGradient id="fspki0leya" x1="50%" x2="50%" y1="0%" y2="100%">
@@ -22,9 +22,9 @@
         </g>
       </svg>
       <span class="title"> Work Logger </span>
-    </div>
+    </div> -->
     <div id="wrapper">
-      <h1>Settings</h1>
+      <h1 onclick="test()">Settings</h1>
       <div>
         <div>
           <label for="username">reminder time:</label>
@@ -47,37 +47,8 @@
             <th><span>delete</span></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td class="lalign">silly tshirts</td>
-            <td>6,000</td>
-            <td>110</td>
-          </tr>
-          <tr>
-            <td class="lalign">desktop workspace photos</td>
-            <td>2,200</td>
-            <td>500</td>
-          </tr>
-          <tr>
-            <td class="lalign">arrested development quotes</td>
-            <td>13,500</td>
-            <td>900</td>
-          </tr>
-          <tr>
-            <td class="lalign">popular web series</td>
-            <td>8,700</td>
-            <td>350</td>
-          </tr>
-          <tr>
-            <td class="lalign">2013 webapps</td>
-            <td>9,900</td>
-            <td>460</td>
-          </tr>
-          <tr>
-            <td class="lalign">ring bananaphone</td>
-            <td>10,500</td>
-            <td>748</td>
-          </tr>
+        <tbody id="log_table">
+
         </tbody>
       </table>
     </div>

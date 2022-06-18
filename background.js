@@ -1,3 +1,30 @@
+
+
+//listen for actions from other pages
+chrome.runtime.onMessage.addListener(async (request) => {
+  //new log
+  if (request.action === "add") {
+    await addRecord(request.data.description);
+
+    // inform popup.js of new insertion
+    chrome.runtime.sendMessage({
+      action: "added",
+    });
+  }
+  // fetch records requested by options.js
+  else if (request.action === "fetchAll") {
+    const records = getRecords();
+    records.then((all_logs) => {
+      chrome.runtime.sendMessage({
+        action: "logsSent",
+        logs: all_logs,
+      });
+    });
+  }
+});
+
+
+
 function getRecords() {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get(["logs"], (data) => {
@@ -9,7 +36,15 @@ function getRecords() {
     });
   });
 }
-all_logs = [];
+
+getRecords().then((logs) => {
+  all_logs = logs;
+})
+
+
+
+
+//add one log to local storage
 function setRecord(logs) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.set({ logs }, (data) => {
@@ -18,19 +53,37 @@ function setRecord(logs) {
   });
 }
 
+// save new log
 async function addRecord(description) {
   const records = await getRecords();
   records.push({ description, date: Date.now() });
   await setRecord(records);
 }
-chrome.runtime.onMessage.addListener(async (request) => {
-  console.log("here");
-  if (request.message === "add") {
-    await addRecord(request.data.description);
-    chrome.runtime.sendMessage({
-      message: "added",
+
+
+// scheduled notifications 
+chrome.alarms.create('reminder', {
+  when: Date.now(),
+  periodInMinutes: 0.1
+});
+
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === "reminder") {
+    chrome.notifications.create('test', {
+      type: 'basic',
+      iconUrl: 'icon.png',
+      title: 'Test Message',
+      message: 'You are awesome!',
+      priority: 2
     });
-  } else if (request.message === "fetch records") {
-    console.log("I got Hi");
+
+    setTimeout(() => {
+      chrome.notifications.clear('test')
+    }, 1000);
   }
 });
+
+
+
+
