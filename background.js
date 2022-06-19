@@ -64,7 +64,7 @@ async function addRecord(description) {
 // scheduled notifications 
 chrome.alarms.create('reminder', {
   when: Date.now(),
-  periodInMinutes: 0.1
+  periodInMinutes: 10
 });
 
 
@@ -73,14 +73,14 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     chrome.notifications.create('test', {
       type: 'basic',
       iconUrl: 'icon.png',
-      title: 'Test Message',
-      message: 'You are awesome!',
+      title: 'Work Log reminder',
+      message: 'Hey, don\'t forget to add your work log!',
       priority: 2
     });
 
     setTimeout(() => {
       chrome.notifications.clear('test')
-    }, 1000);
+    }, 10000);
   }
 });
 
