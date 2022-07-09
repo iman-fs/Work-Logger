@@ -1,6 +1,8 @@
 const btn = document.getElementById("btn");
 const error = document.getElementById("error");
-const input = document.getElementById("log-body");
+const title_el = document.getElementById("title");
+const body_el = document.getElementById("body");
+const spent_hours_el = document.getElementById("spent-hours");
 
 // listen for actions
 chrome.runtime.onMessage.addListener((request) => {
@@ -12,16 +14,39 @@ chrome.runtime.onMessage.addListener((request) => {
 });
 
 btn.addEventListener("click", () => {
-  const description = input.value;
-  if (!description) {
-    error.innerText = "please fill the description";
-    return;
+  console.log("clicked");
+  const title = title_el.value;
+  const body = body_el.value;
+  const spent_hours = spent_hours_el.value;
+  let errors = [];
+
+  if (!title) {
+    errors.push("title");
+
   }
 
+  if (!body) {
+    errors.push("description");
+  }
+
+  if (!spent_hours) {
+    errors.push("spent_hours");
+  }
+
+  if (errors.length > 0) {
+    error.innerHTML = "";
+    errors.forEach((err) => {
+      error.innerHTML += `<li>${err} is required</li>`;
+    }
+    );
+
+    return;
+  }
+  console.log("end")
   chrome.runtime.sendMessage({
     action: "add",
     data: {
-      description,
+      log_body,
     },
   });
 });

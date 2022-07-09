@@ -3,6 +3,7 @@ chrome.runtime.onMessage.addListener(async (request) => {
   //recieve logs from background.js
   if (request.action === "logsSent") {
     render(request.logs);
+    window.lll = request.logs;
   }
 });
 
