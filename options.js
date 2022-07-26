@@ -32,7 +32,9 @@ function render(logs) {
     date = new Date(log.date).toLocaleDateString();
     content += `          
     <tr>
-      <td class="lalign">${log.description}</td>
+      <td class="lalign">${log.title}</td>
+      <td class="lalign">${log.body}</td>
+      <td class="lalign">${log.spent_hours}</td>
       <td>${date}</td>
       <td>action</td>
     </tr>

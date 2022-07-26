@@ -4,7 +4,7 @@
 chrome.runtime.onMessage.addListener(async (request) => {
   //new log
   if (request.action === "add") {
-    await addRecord(request.data.description);
+    await addRecord(request.data);
 
     // inform popup.js of new insertion
     chrome.runtime.sendMessage({
@@ -54,9 +54,16 @@ function setRecord(logs) {
 }
 
 // save new log
-async function addRecord(description) {
+async function addRecord(log) {
   const records = await getRecords();
-  records.push({ description, date: Date.now() });
+  records.push(
+    {
+      title: log.title,
+      body: log.body,
+      spent_hours: log.spent_hours,
+      date: Date.now()
+    }
+  );
   await setRecord(records);
 }
 

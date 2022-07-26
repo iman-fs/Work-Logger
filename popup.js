@@ -14,7 +14,6 @@ chrome.runtime.onMessage.addListener((request) => {
 });
 
 btn.addEventListener("click", () => {
-  console.log("clicked");
   const title = title_el.value;
   const body = body_el.value;
   const spent_hours = spent_hours_el.value;
@@ -46,7 +45,9 @@ btn.addEventListener("click", () => {
   chrome.runtime.sendMessage({
     action: "add",
     data: {
-      log_body,
+      title,
+      body,
+      spent_hours,
     },
   });
 });
